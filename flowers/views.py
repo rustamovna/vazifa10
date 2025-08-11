@@ -5,20 +5,11 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from .models import Flower
-from .serializers import FlowerSerializer
+
 from django.shortcuts import get_object_or_404
 
-class RegisterSerializer(ModelSerializer):
-    class Meta:
-        model = User
-        fields = ['username', 'password']
-        extra_kwargs = {'password': {'write_only': True}}
+from .serializers import RegisterSerializer, FlowerSerializer
 
-    def create(self, validated_data):
-        user = User(username=validated_data['username'])
-        user.set_password(validated_data['password'])
-        user.save()
-        return user
 
 class RegisterView(generics.CreateAPIView):
     queryset = User.objects.all()
